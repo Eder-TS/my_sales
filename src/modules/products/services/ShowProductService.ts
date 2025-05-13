@@ -7,9 +7,8 @@ interface IShowProduct {
 }
 
 export default class ShowProductService {
-  async excute({ id }: IShowProduct): Promise<Product> {
+  async execute({ id }: IShowProduct): Promise<Product> {
     const product = await productsRepositories.findById(id);
-
     if (!product) throw new AppError('Product not found.', 404);
 
     return product;

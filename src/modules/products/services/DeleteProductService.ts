@@ -1,5 +1,4 @@
 import AppError from '@shared/errors/AppError';
-import { Product } from '../database/entities/Product';
 import { productsRepositories } from '../database/repositories/ProductsRepositories';
 
 interface IDeleteProduct {
@@ -7,7 +6,7 @@ interface IDeleteProduct {
 }
 
 export default class DeleteProductService {
-  async excute({ id }: IDeleteProduct): Promise<void> {
+  async execute({ id }: IDeleteProduct): Promise<void> {
     const product = await productsRepositories.findById(id);
 
     if (!product) throw new AppError('Product not found.', 404);

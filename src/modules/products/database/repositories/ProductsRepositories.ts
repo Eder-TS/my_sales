@@ -4,11 +4,11 @@ import { Product } from '../entities/Product';
 export const productsRepositories = AppDataSource.getRepository(Product).extend(
   {
     async findByName(name: string): Promise<Product | null> {
-      return this.findOneBy({ name });
+      return await this.findOneBy({ name });
     },
 
     async findById(id: string): Promise<Product | null> {
-      return this.findOneBy({ id });
+      return await this.findOneBy({ id });
     },
   },
 );
