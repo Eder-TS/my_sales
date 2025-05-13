@@ -1,0 +1,89 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "my_sales",
+    "collectionId": "e1585c47-6d10-4749-8ca5-2f3cb51e6ab3",
+    "dateExported": "2025-05-13T15:48:49.989Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "edd4b8b2-d01d-4bb6-a106-90a091e7270f",
+            "name": "products",
+            "containerId": "",
+            "created": "2025-05-13T13:37:34.925Z",
+            "sortNum": 10000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "ddadaea1-1cde-421e-a46d-c2ea0756610d",
+            "colId": "e1585c47-6d10-4749-8ca5-2f3cb51e6ab3",
+            "containerId": "edd4b8b2-d01d-4bb6-a106-90a091e7270f",
+            "name": "listProducts",
+            "url": "http://localhost:3333/products/",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2025-05-13T13:39:58.103Z",
+            "modified": "2025-05-13T13:39:58.103Z",
+            "headers": []
+        },
+        {
+            "_id": "41e88a2a-3746-47e3-80aa-9adafeee6673",
+            "colId": "e1585c47-6d10-4749-8ca5-2f3cb51e6ab3",
+            "containerId": "edd4b8b2-d01d-4bb6-a106-90a091e7270f",
+            "name": "showProduct",
+            "url": "http://localhost:3333/products/1",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2025-05-13T13:40:07.793Z",
+            "modified": "2025-05-13T13:40:07.793Z",
+            "headers": []
+        },
+        {
+            "_id": "f643e9ed-924a-4330-b85c-72998bfae112",
+            "colId": "e1585c47-6d10-4749-8ca5-2f3cb51e6ab3",
+            "containerId": "edd4b8b2-d01d-4bb6-a106-90a091e7270f",
+            "name": "createProduct",
+            "url": "http://localhost:3333/products/",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2025-05-13T14:52:11.865Z",
+            "modified": "2025-05-13T14:52:11.865Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"finicas\",\n  \"price\": 12,\n  \"quantity\": 22\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "f482421b-66b1-4f3a-aef9-08f8ca50faf9",
+            "colId": "e1585c47-6d10-4749-8ca5-2f3cb51e6ab3",
+            "containerId": "edd4b8b2-d01d-4bb6-a106-90a091e7270f",
+            "name": "updateProduct",
+            "url": "http://localhost:3333/products/2",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2025-05-13T15:22:46.869Z",
+            "modified": "2025-05-13T15:22:46.869Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n \"name\": \"finicas\",\n  \"price\": 12875,\n  \"quantity\": 272\n  \n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "8ee303f5-9d15-4daa-ba4f-15461c5e4bc4",
+            "colId": "e1585c47-6d10-4749-8ca5-2f3cb51e6ab3",
+            "containerId": "edd4b8b2-d01d-4bb6-a106-90a091e7270f",
+            "name": "deleteProduct",
+            "url": "http://localhost:3333/products/2",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2025-05-13T15:47:29.619Z",
+            "modified": "2025-05-13T15:47:29.619Z",
+            "headers": []
+        }
+    ],
+    "ref": "lDR842C8bblcw_Bg4B9eMQQipy1SOPxhvUG_7-sbe0KmgzPd7iyYVRFm59gZYmGlzc45xqtFY1ZwBYxxDWAzrw"
+}

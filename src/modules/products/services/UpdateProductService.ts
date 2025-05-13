@@ -21,7 +21,8 @@ export default class UpdateProductService {
 
     const productExistsByName = await productsRepositories.findByName(name);
 
-    if (productExistsByName && productExistsByName.id !== id)
+    // Atenção para typeof productExistsByName.id = number e typeof id = string.
+    if (productExistsByName && productExistsByName.id != id)
       throw new AppError('There is already one product with this name.', 409);
 
     productExistsById.name = name;
