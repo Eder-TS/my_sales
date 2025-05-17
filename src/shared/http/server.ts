@@ -5,6 +5,7 @@ import cors from 'cors';
 import routes from './routes';
 import ErrorHandlerMiddleware from '@shared/middlewares/ErrorHandlerMiddleware';
 import { AppDataSource } from '@shared/typeorm/data-source';
+import { errors } from 'celebrate';
 
 AppDataSource.initialize()
   .then(async () => {
@@ -13,6 +14,9 @@ AppDataSource.initialize()
     app.use(express.json());
 
     app.use(routes);
+
+    // Usando o middleware do celebrate para que as validações dos esquemas sejam feitas.
+    app.use(errors());
 
     // Depois de lançar as rotas, chamo o middleware para pegar os erros.
     app.use(ErrorHandlerMiddleware.HandleError);
