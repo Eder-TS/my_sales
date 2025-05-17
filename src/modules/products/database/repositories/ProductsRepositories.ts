@@ -7,7 +7,7 @@ export const productsRepositories = AppDataSource.getRepository(Product).extend(
       return await this.findOneBy({ name });
     },
 
-    async findById(id: string): Promise<Product | null> {
+    async findById(id: number): Promise<Product | null> {
       return await this.findOneBy({ id });
     },
   },
