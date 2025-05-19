@@ -25,7 +25,9 @@ export default class AuthMiddleware {
       const decodedToken = verify(token, process.env.APP_SECRET as Secret);
       const { sub } = decodedToken as ITokenPayload;
 
-      request.user = { id: sub };
+      const subNumber = Number(sub);
+      request.user = { id: subNumber };
+
       return next();
     } catch (error) {
       throw new AppError('Invalid JWT token', 401);
