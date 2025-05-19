@@ -19,12 +19,16 @@ export default class UpdateUserAvatarService {
       // Verifica a existência de um avatar recriando o path e depois verificando
       // se um arquivo com este nome esxiste neste path.
       const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
 
-      if (userAvatarFileExists) {
-        // Deleta com unlink.
-        await fs.promises.unlink(userAvatarFilePath);
-      }
+      // Foi usado um bloco try/catch para evitar erro indesejado caso aconteça do arquivo ser deletado
+      // da pasta uploads as ainda ter o nome salvo no BD.
+      try {
+        const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
+        if (userAvatarFileExists) {
+          // Deleta com unlink.
+          await fs.promises.unlink(userAvatarFilePath);
+        }
+      } catch (error) {}
     }
 
     user.avatar = avatarFileName;
