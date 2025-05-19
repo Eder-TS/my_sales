@@ -27,4 +27,7 @@ AppDataSource.initialize()
       console.log('Server runing on port 3333!');
     });
   })
-  .catch(error => console.log(error));
+  .catch(error => {
+    console.error('❌ Erro ao iniciar o servidor ou conectar no banco:', error);
+    process.exit(1); // Opcional: força encerrar a aplicação se falhar);
+  });
