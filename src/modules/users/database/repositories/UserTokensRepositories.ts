@@ -1,19 +1,19 @@
 import { AppDataSource } from '@shared/typeorm/data-source';
-import UserToken from '../entities/UserToken';
+import UserTokens from '../entities/UserTokens';
 
 export const userTokensRepositories = AppDataSource.getRepository(
-  UserToken,
+  UserTokens,
 ).extend({
-  async findByToken(token: string): Promise<UserToken | null> {
+  async findByToken(token: string): Promise<UserTokens | null> {
     return await this.findOneBy({ token });
   },
 
-  async generate(userId: number): Promise<UserToken | null> {
-    const userToken = this.create({
+  async generate(userId: number): Promise<UserTokens | null> {
+    const userTokens = this.create({
       userId,
     });
 
-    await this.save(userToken);
-    return userToken;
+    await this.save(userTokens);
+    return userTokens;
   },
 });

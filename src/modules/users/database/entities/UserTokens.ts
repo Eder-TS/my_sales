@@ -6,8 +6,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity('userToken')
-export default class UserToken {
+@Entity('userTokens')
+export default class UserTokens {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -1,5 +1,4 @@
 import AppError from '@shared/errors/AppError';
-import UserToken from '../database/entities/UserToken';
 import { usersRepositories } from '../database/repositories/UsersRepositories';
 import { userTokensRepositories } from '../database/repositories/UserTokensRepositories';
 
