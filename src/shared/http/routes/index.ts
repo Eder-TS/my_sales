@@ -2,6 +2,7 @@ import uploadConfig from '@config/upload';
 import productsRouter from '@modules/products/routes/ProductRoutes';
 import avatarRouter from '@modules/users/routes/AvatarRoutes';
 import passwordRouter from '@modules/users/routes/PasswordRoutes';
+import profileRouter from '@modules/users/routes/ProfileRoutes';
 import sessionRouter from '@modules/users/routes/SessionRoutes';
 import userRouter from '@modules/users/routes/UserRoutes';
 import express, { Router } from 'express';
@@ -16,7 +17,8 @@ routes.use('/products', productsRouter);
 routes.use('/users', userRouter);
 routes.use('/sessions', sessionRouter);
 routes.use('/avatar', avatarRouter);
-routes.use('/password', passwordRouter);
+routes.use('/passwords', passwordRouter);
+routes.use('/profiles', profileRouter);
 
 // Fornece rota estática para o frontend usar o avatar sem precisar
 // de controllers, services...
