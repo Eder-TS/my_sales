@@ -18,6 +18,22 @@ AppDataSource.initialize()
     // Usando o middleware do celebrate para que as validações dos esquemas sejam feitas.
     app.use(errors());
 
+    app.use(
+      (
+        err: any,
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction,
+      ) => {
+        if (err instanceof SyntaxError && 'body' in err) {
+          return res
+            .status(400)
+            .json({ error: 'Malformed JSON in request body.' });
+        }
+        next(err);
+      },
+    );
+
     // Depois de lançar as rotas, chamo o middleware para pegar os erros.
     app.use(ErrorHandlerMiddleware.HandleError);
 
