@@ -3,7 +3,7 @@ import { Product } from '../database/entities/Product';
 import { productsRepositories } from '../database/repositories/ProductsRepositories';
 
 interface IUpdateProduct {
-  id: string;
+  id: number;
   name: string;
   price: number;
   quantity: number;

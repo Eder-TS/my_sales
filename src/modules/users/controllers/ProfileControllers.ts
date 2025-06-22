@@ -5,6 +5,9 @@ import UpdateProfileService from '../services/UpdateProfileService';
 export default class ProfileControllers {
   public async show(request: Request, response: Response): Promise<Response> {
     const showProfile = new ShowProfileService();
+
+    // Feita a estenção de Request do Express para adiconar a propriedade
+    // user.id e ficar mais fácil usar este dado.
     const userId = request.user.id;
 
     const user = await showProfile.execute({ userId });

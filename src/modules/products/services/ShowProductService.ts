@@ -3,7 +3,7 @@ import { Product } from '../database/entities/Product';
 import { productsRepositories } from '../database/repositories/ProductsRepositories';
 
 interface IShowProduct {
-  id: string;
+  id: number;
 }
 
 export default class ShowProductService {
@@ -14,17 +14,3 @@ export default class ShowProductService {
     return product;
   }
 }
-
-// interface IShowProduct {
-//   name: string;
-// }
-
-// export default class ShowProductService {
-//   async excute({ name }: IShowProduct): Promise<Product> {
-//     const product = await productsRepositories.findByName(name);
-
-//     if (!product) throw new AppError('Product not found.', 404);
-
-//     return product;
-//   }
-// }
