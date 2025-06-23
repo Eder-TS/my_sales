@@ -12,7 +12,7 @@ export default class CustomersControllers {
 
     const customer = await createCustomer.execute({ name, email });
 
-    return response.sendStatus(204).json(customer);
+    return response.json(customer);
   }
 
   async list(request: Request, response: Response): Promise<Response> {
@@ -27,7 +27,7 @@ export default class CustomersControllers {
     const showCustomer = new ShowCustomerService();
     const id = Number(request.params.id);
 
-    const customer = showCustomer.execute({ id });
+    const customer = await showCustomer.execute({ id });
 
     return response.json(customer);
   }

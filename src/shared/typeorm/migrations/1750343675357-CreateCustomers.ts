@@ -22,7 +22,7 @@ export class CreateCustomers1750343675357 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'createAt',
+            name: 'createdAt',
             type: 'timestamp',
             default: 'now()',
           },
