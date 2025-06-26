@@ -3,14 +3,15 @@ import { Customer } from '../database/entities/Customer';
 import { customerRepositories } from '../database/repositories/CustomerRepositories';
 
 interface IUpdateCustomer {
-  id: number;
+  id: string;
   name: string;
   email: string;
 }
 
 export default class UpdateCustomerService {
   async execute({ id, name, email }: IUpdateCustomer): Promise<Customer> {
-    const customer = await customerRepositories.findById(id);
+    const idToUpdate = Number(id);
+    const customer = await customerRepositories.findById(idToUpdate);
 
     if (!customer) throw new AppError('Customer not found.', 404);
 
