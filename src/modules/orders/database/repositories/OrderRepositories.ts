@@ -1,11 +1,16 @@
 import { AppDataSource } from '@shared/typeorm/data-source';
 import { Order } from '../entities/Order';
 import { Customer } from '@modules/customers/database/entities/Customer';
-import { Product } from '@modules/products/database/entities/Product';
 
 interface ICreateOrder {
   customer: Customer;
-  products: Product[];
+  products: ICreateOrderProducts[];
+}
+
+interface ICreateOrderProducts {
+  productId: number;
+  quantity: number;
+  price: number;
 }
 
 export const orderRepositories = AppDataSource.getRepository(Order).extend({
