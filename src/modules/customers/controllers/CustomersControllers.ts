@@ -17,10 +17,12 @@ export default class CustomersControllers {
 
   async list(request: Request, response: Response): Promise<Response> {
     const listCustomers = new ListCustomersService();
+    const page = request.query.page as string;
+    const limit = request.query.limit as string;
 
-    const customer = await listCustomers.execute();
+    const customers = await listCustomers.execute(page, limit);
 
-    return response.json(customer);
+    return response.json(customers);
   }
 
   async show(request: Request, response: Response): Promise<Response> {
