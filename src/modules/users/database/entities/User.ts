@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export class User {
@@ -17,7 +18,11 @@ export class User {
   @Column({ type: 'text' })
   email: string;
 
+  // Usando a biblioteca class-transformer para que as senhas salvas no banco
+  // de dados não sejam mostradas nas buscas, também é preciso implementar no método
+  // que deseja proteger.
   @Column({ type: 'text' })
+  @Exclude()
   password: string;
 
   @Column({ type: 'text' })
