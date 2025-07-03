@@ -37,6 +37,17 @@ export default class CreateOrderService {
         404,
       );
 
+    // Checa quantidade válida.
+    const quantityNAN = products.filter(
+      product => typeof product.quantity !== typeof Number,
+    );
+
+    if (quantityNAN.length)
+      throw new AppError(
+        `The type of quantity is not a number in ${quantityNAN[0].id}`,
+        409,
+      );
+
     const quantityAvailable = products.filter(product => {
       const verifyQuantity = productsExists.filter(
         productExist => productExist.id === product.id,
