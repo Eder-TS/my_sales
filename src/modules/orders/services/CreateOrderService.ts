@@ -41,6 +41,7 @@ export default class CreateOrderService {
       const verifyQuantity = productsExists.filter(
         productExist => productExist.id === product.id,
       );
+
       return verifyQuantity[0].quantity < product.quantity;
     });
 

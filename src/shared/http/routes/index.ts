@@ -22,7 +22,7 @@ routes.use('/avatar', avatarRouter);
 routes.use('/passwords', passwordRouter);
 routes.use('/profiles', profileRouter);
 routes.use('/customers', customerRouter);
-routes.use('orders', ordersRouter);
+routes.use('/orders', ordersRouter);
 
 // Fornece rota estática para o frontend usar o avatar sem precisar
 // de controllers, services...

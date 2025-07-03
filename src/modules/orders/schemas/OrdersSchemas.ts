@@ -9,6 +9,6 @@ export const idParamsValidate = celebrate({
 export const createOrderValidate = celebrate({
   [Segments.BODY]: {
     customerId: Joi.string().required(),
-    products: Joi.required(),
+    products: Joi.array().required(),
   },
 });

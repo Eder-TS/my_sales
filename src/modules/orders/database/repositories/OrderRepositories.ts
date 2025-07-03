@@ -17,7 +17,7 @@ export const orderRepositories = AppDataSource.getRepository(Order).extend({
   async findById(id: number): Promise<Order | null> {
     const order = await this.findOne({
       where: { id },
-      relations: ['orderProducts', 'customer'],
+      relations: ['orderProduct', 'customer'],
     });
 
     return order;
