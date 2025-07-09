@@ -18,6 +18,9 @@ routes.get('/health', (request, response) => {
 routes.use('/products', productsRouter);
 routes.use('/users', userRouter);
 routes.use('/sessions', sessionRouter);
+
+// Para fazer upload de um avatar para teste da ferramenta usar o
+// Postman pois o ThunderClient requer versão paga para esta função.
 routes.use('/avatar', avatarRouter);
 routes.use('/passwords', passwordRouter);
 routes.use('/profiles', profileRouter);
