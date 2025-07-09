@@ -17,10 +17,12 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
+    "@types/ioredis": "^4.28.10",
     "@types/joi": "^17.2.3",
     "@types/multer": "^1.4.12",
     "@types/node": "^22.15.19",
     "@types/nodemailer": "^6.4.17",
+    "@types/redis": "^4.0.11",
     "cross-env": "^7.0.3",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^6.15.0",
@@ -42,10 +44,12 @@
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
     "express-async-errors": "^3.1.1",
+    "ioredis": "^5.6.1",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.2",
     "nodemailer": "^7.0.3",
     "pg": "^8.15.6",
+    "redis": "^4.7.1",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.22"
   }
