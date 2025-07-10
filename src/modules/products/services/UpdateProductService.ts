@@ -1,6 +1,7 @@
 import AppError from '@shared/errors/AppError';
 import { Product } from '../database/entities/Product';
 import { productsRepositories } from '../database/repositories/ProductsRepositories';
+import RedisCache from '@shared/cache/RedisCache';
 
 interface IUpdateProduct {
   id: string;
@@ -18,6 +19,9 @@ export default class UpdateProductService {
     const idToUpdate = Number(id);
     const productExistsById = await productsRepositories.findById(idToUpdate);
 
+    // Não usa esta linha se não usar cache do servidor/redis.
+    const redisCache = new RedisCache();
+
     if (!productExistsById) throw new AppError('Product not found', 404);
 
     const productExistsByName = await productsRepositories.findByName(name);
@@ -30,8 +34,11 @@ export default class UpdateProductService {
     productExistsById.price = price;
     productExistsById.quantity = quantity;
 
-    const updateProduct = await productsRepositories.save(productExistsById);
+    await productsRepositories.save(productExistsById);
 
-    return updateProduct;
+    // Não usa esta linha se não usar cache do servidor/redis.
+    await redisCache.invalidate('api-mysales-PRODUCT-LIST');
+
+    return productExistsById;
   }
 }
