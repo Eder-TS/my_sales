@@ -6,12 +6,16 @@ import routes from './routes';
 import ErrorHandlerMiddleware from '@shared/middlewares/ErrorHandlerMiddleware';
 import { AppDataSource } from '@shared/typeorm/data-source';
 import { errors } from 'celebrate';
+import RateLimiter from '@shared/middlewares/RateLimiter';
 
 AppDataSource.initialize()
   .then(async () => {
     const app = express();
     app.use(cors());
     app.use(express.json());
+
+    // Adicionando o Rate Limiter para evitar ataque hacker de força bruta.
+    app.use(RateLimiter);
 
     app.use(routes);
 
