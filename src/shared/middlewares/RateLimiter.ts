@@ -16,6 +16,8 @@ redisClient.connect().catch(console.error);
 const limiter = new RateLimiterRedis({
   storeClient: redisClient,
   keyPrefix: 'ratelimit',
+
+  // Ajustar conforme demanda da aplicação.
   points: 5,
   duration: 5,
 });
@@ -27,7 +29,7 @@ export default async function RateLimiter(
 ): Promise<void> {
   try {
     await limiter.consume(request.ip as string);
-    console.log('bosta');
+
     return next();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
