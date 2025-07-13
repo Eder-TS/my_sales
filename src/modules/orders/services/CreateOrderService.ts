@@ -39,7 +39,7 @@ export default class CreateOrderService {
 
     // Checa quantidade válida.
     const quantityNAN = products.filter(
-      product => typeof product.quantity !== typeof Number,
+      product => typeof product.quantity !== 'number',
     );
 
     if (quantityNAN.length)
