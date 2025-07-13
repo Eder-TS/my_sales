@@ -1,14 +1,9 @@
-import { Product } from '@modules/products/infra/database/entities/Product';
 import { orderRepositories } from '../infra/database/repositories/OrderRepositories';
 import AppError from '@shared/errors/AppError';
 import { productsRepositories } from '@modules/products/infra/database/repositories/ProductsRepositories';
 import { Order } from '../infra/database/entities/Order';
 import { customerRepositories } from '@modules/customers/infra/database/repositories/CustomerRepositories';
-
-interface ICreateOrder {
-  customerId: string;
-  products: Product[];
-}
+import { ICreateOrder } from '../domain/models/ICreateOrder';
 
 export default class CreateOrderService {
   async execute({ customerId, products }: ICreateOrder): Promise<Order> {

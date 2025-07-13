@@ -1,3 +1,4 @@
+import { IUserTokens } from '@modules/users/domain/models/IUserTokens';
 import {
   Column,
   CreateDateColumn,
@@ -7,7 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity('userTokens')
-export default class UserTokens {
+export default class UserTokens implements IUserTokens {
   @PrimaryGeneratedColumn()
   id: number;
 
