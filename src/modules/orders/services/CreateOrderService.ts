@@ -1,9 +1,9 @@
-import { Product } from '@modules/products/database/entities/Product';
-import { orderRepositories } from '../database/repositories/OrderRepositories';
+import { Product } from '@modules/products/infra/database/entities/Product';
+import { orderRepositories } from '../infra/database/repositories/OrderRepositories';
 import AppError from '@shared/errors/AppError';
-import { productsRepositories } from '@modules/products/database/repositories/ProductsRepositories';
-import { customerRepositories } from '@modules/customers/database/repositories/CustomerRepositories';
-import { Order } from '../database/entities/Order';
+import { productsRepositories } from '@modules/products/infra/database/repositories/ProductsRepositories';
+import { Order } from '../infra/database/entities/Order';
+import { customerRepositories } from '@modules/customers/infra/database/repositories/CustomerRepositories';
 
 interface ICreateOrder {
   customerId: string;

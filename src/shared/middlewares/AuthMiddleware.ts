@@ -29,6 +29,7 @@ export default class AuthMiddleware {
       request.user = { id: subNumber };
 
       return next();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       throw new AppError('Invalid JWT token', 401);
     }

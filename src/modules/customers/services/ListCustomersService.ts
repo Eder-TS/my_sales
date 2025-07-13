@@ -1,6 +1,6 @@
 import { IPagination } from '@shared/interfaces/pagination.interface';
-import { customerRepositories } from '../database/repositories/CustomerRepositories';
-import { Customer } from '../database/entities/Customer';
+import { Customer } from '../infra/database/entities/Customer';
+import { customerRepositories } from '../infra/database/repositories/CustomerRepositories';
 
 export default class ListCustomersService {
   // Recebe, opcinalmente, a página e limite de linhas por página para
