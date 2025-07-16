@@ -1,14 +1,19 @@
-import { orderRepositories } from '../infra/database/repositories/OrderRepositories';
 import AppError from '@shared/errors/AppError';
 import { productsRepositories } from '@modules/products/infra/database/repositories/ProductsRepositories';
 import { Order } from '../infra/database/entities/Order';
-import { customerRepositories } from '@modules/customers/infra/database/repositories/CustomerRepositories';
 import { ICreateOrder } from '../domain/models/ICreateOrder';
+import { ICustomerRepositories } from '@modules/customers/domain/repositories/ICustomerRepositories';
+import { IOrderRepositories } from '../domain/repositories/IOrderRepositories';
 
 export default class CreateOrderService {
+  constructor(
+    private readonly customerRepositories: ICustomerRepositories,
+    private readonly orderRepositories: IOrderRepositories,
+  ) {}
+
   async execute({ customerId, products }: ICreateOrder): Promise<Order> {
     const idToFind = Number(customerId);
-    const customerExists = await customerRepositories.findById(idToFind);
+    const customerExists = await this.customerRepositories.findById(idToFind);
 
     if (!customerExists)
       throw new AppError('Could not find any customer with given id.');
@@ -63,7 +68,7 @@ export default class CreateOrderService {
       price: productsExists.filter(p => p.id === product.id)[0].price,
     }));
 
-    const order = await orderRepositories.createOrder({
+    const order = await this.orderRepositories.createOrder({
       customer: customerExists,
       products: serializedProducts,
     });

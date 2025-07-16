@@ -1,12 +1,13 @@
 import AppError from '@shared/errors/AppError';
 import { Order } from '../infra/database/entities/Order';
-import { orderRepositories } from '../infra/database/repositories/OrderRepositories';
+import { IOrderRepositories } from '../domain/repositories/IOrderRepositories';
 
 export default class ShowOrderService {
+  constructor(private readonly orderRepositories: IOrderRepositories) {}
   async execute(id: string): Promise<Order> {
     const idToFind = Number(id);
 
-    const order = await orderRepositories.findById(idToFind);
+    const order = await this.orderRepositories.findById(idToFind);
 
     if (!order) throw new AppError('Order not found.');
 
