@@ -1,9 +1,11 @@
 import { IPagination } from '@shared/interfaces/pagination.interface';
 import { Customer } from '../infra/database/entities/Customer';
-import { customerRepositories } from '../infra/database/repositories/CustomerRepositories';
+import { ICustomerRepositories } from '../domain/repositories/ICustomerRepositories';
 
 export default class ListCustomersService {
-  // Recebe, opcinalmente, a página e limite de linhas por página para
+  constructor(private readonly customerRepositories: ICustomerRepositories) {}
+
+  // Recebe, opcionalmente, a página e limite de linhas por página para
   // fazer a paginação e não sobrecarregar o banco de dados.
   async execute(
     queryPage: string,
@@ -14,7 +16,7 @@ export default class ListCustomersService {
     const page = Number(queryPage) || 1;
     const limit = Number(queryLimit) || 10;
 
-    const [data, total] = await customerRepositories.findAndCount({
+    const [data, total] = await this.customerRepositories.findAndCount({
       take: limit,
       skip: (page - 1) * limit,
     });
