@@ -1,29 +1,64 @@
 import { AppDataSource } from '@shared/infra/typeorm/data-source';
 import { Product } from '../entities/Product';
-import { In } from 'typeorm';
+import { In, Repository } from 'typeorm';
+import {
+  IProductsRepositories,
+  IFindProducts,
+} from '@modules/products/domain/repositories/IProductsRepositories';
+import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
+import { IProduct } from '@modules/products/domain/models/IProduct';
+import { IUpdateProductQuantity } from '@modules/products/domain/models/IUpdateProductQuantity';
 
-interface IFindProducts {
-  id: number;
+export default class ProductsRepositories implements IProductsRepositories {
+  private ormRepository: Repository<Product>;
+
+  constructor() {
+    this.ormRepository = AppDataSource.getRepository(Product);
+  }
+
+  async findByName(name: string): Promise<IProduct | null> {
+    return await this.ormRepository.findOneBy({ name });
+  }
+
+  async findById(id: number): Promise<IProduct | null> {
+    return await this.ormRepository.findOneBy({ id });
+  }
+
+  async findAllByIds(products: IFindProducts[]): Promise<IProduct[]> {
+    const productsId = products.map(product => product.id);
+
+    const existentProducts = await this.ormRepository.find({
+      where: { id: In(productsId) },
+    });
+
+    return existentProducts;
+  }
+
+  create({ name, price, quantity }: ICreateProduct): IProduct {
+    return this.ormRepository.create({ name, price, quantity });
+  }
+
+  async save(product: IProduct): Promise<IProduct> {
+    await this.ormRepository.save(product);
+
+    return product;
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.ormRepository.delete(id);
+    return;
+  }
+
+  async find(): Promise<IProduct[]> {
+    const products = await this.ormRepository.find();
+
+    return products;
+  }
+
+  async updateQuantity(
+    updateProductsQuantity: IUpdateProductQuantity[],
+  ): Promise<void> {
+    await this.ormRepository.save(updateProductsQuantity);
+    return;
+  }
 }
-
-export const productsRepositories = AppDataSource.getRepository(Product).extend(
-  {
-    async findByName(name: string): Promise<Product | null> {
-      return await this.findOneBy({ name });
-    },
-
-    async findById(id: number): Promise<Product | null> {
-      return await this.findOneBy({ id });
-    },
-
-    async findAllByIds(products: IFindProducts[]): Promise<Product[]> {
-      const productsId = products.map(product => product.id);
-
-      const existentProducts = await this.find({
-        where: { id: In(productsId) },
-      });
-
-      return existentProducts;
-    },
-  },
-);

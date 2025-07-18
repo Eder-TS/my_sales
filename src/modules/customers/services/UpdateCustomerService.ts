@@ -16,7 +16,7 @@ export default class UpdateCustomerService {
 
     if (!customer) throw new AppError('Customer not found.', 404);
 
-    const customerExists = await this.customerRepositories.findbyEmail(email);
+    const customerExists = await this.customerRepositories.findByEmail(email);
 
     if (customerExists && email !== customer.email)
       throw new AppError('There is already one customer with this email.', 409);

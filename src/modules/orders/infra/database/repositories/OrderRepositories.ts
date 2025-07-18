@@ -31,10 +31,4 @@ export default class OrderRepositories implements IOrderRepositories {
 
     return order;
   }
-
-  async save(order: IOrder): Promise<IOrder> {
-    await this.ormRepository.save(order);
-
-    return order;
-  }
 }

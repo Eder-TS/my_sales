@@ -1,14 +1,15 @@
 import AppError from '@shared/errors/AppError';
-import { productsRepositories } from '@modules/products/infra/database/repositories/ProductsRepositories';
 import { Order } from '../infra/database/entities/Order';
 import { ICreateOrder } from '../domain/models/ICreateOrder';
 import { ICustomerRepositories } from '@modules/customers/domain/repositories/ICustomerRepositories';
 import { IOrderRepositories } from '../domain/repositories/IOrderRepositories';
+import { IProductsRepositories } from '@modules/products/domain/repositories/IProductsRepositories';
 
 export default class CreateOrderService {
   constructor(
     private readonly customerRepositories: ICustomerRepositories,
     private readonly orderRepositories: IOrderRepositories,
+    private readonly productsRepositories: IProductsRepositories,
   ) {}
 
   async execute({ customerId, products }: ICreateOrder): Promise<Order> {
@@ -18,7 +19,8 @@ export default class CreateOrderService {
     if (!customerExists)
       throw new AppError('Could not find any customer with given id.');
 
-    const productsExists = await productsRepositories.findAllByIds(products);
+    const productsExists =
+      await this.productsRepositories.findAllByIds(products);
 
     if (!productsExists)
       throw new AppError('Could not find any product with given ids.');
@@ -81,7 +83,7 @@ export default class CreateOrderService {
         productsExists.filter(p => p.id === product.productId)[0].quantity -
         product.quantity,
     }));
-    await productsRepositories.save(updateProductsQuantity);
+    await this.productsRepositories.updateQuantity(updateProductsQuantity);
 
     return order;
   }

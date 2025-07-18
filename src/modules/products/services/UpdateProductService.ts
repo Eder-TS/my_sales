@@ -2,6 +2,7 @@ import AppError from '@shared/errors/AppError';
 import { Product } from '../infra/database/entities/Product';
 import { productsRepositories } from '../infra/database/repositories/ProductsRepositories';
 import RedisCache from '@shared/cache/RedisCache';
+import { IProductsRepositories } from '../domain/repositories/IProductsRepositories';
 
 interface IUpdateProduct {
   id: string;
@@ -10,6 +11,8 @@ interface IUpdateProduct {
   quantity: number;
 }
 export default class UpdateProductService {
+  constructor(private readonly productsRepositories: IProductsRepositories) {}
+
   async execute({
     id,
     name,
@@ -17,14 +20,16 @@ export default class UpdateProductService {
     quantity,
   }: IUpdateProduct): Promise<Product> {
     const idToUpdate = Number(id);
-    const productExistsById = await productsRepositories.findById(idToUpdate);
+    const productExistsById =
+      await this.productsRepositories.findById(idToUpdate);
 
     // Não usa esta linha se não usar cache do servidor/redis.
     const redisCache = new RedisCache();
 
     if (!productExistsById) throw new AppError('Product not found', 404);
 
-    const productExistsByName = await productsRepositories.findByName(name);
+    const productExistsByName =
+      await this.productsRepositories.findByName(name);
 
     // Atenção para typeof productExistsByName.id = number e typeof id = string.
     if (productExistsByName && productExistsByName.id != idToUpdate)
@@ -34,7 +39,7 @@ export default class UpdateProductService {
     productExistsById.price = price;
     productExistsById.quantity = quantity;
 
-    await productsRepositories.save(productExistsById);
+    await this.productsRepositories.save(productExistsById);
 
     // Não usa esta linha se não usar cache do servidor/redis.
     await redisCache.invalidate('api-mysales-PRODUCT-LIST');
