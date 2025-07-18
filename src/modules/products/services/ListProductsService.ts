@@ -5,7 +5,7 @@ import { IProductsRepositories } from '../domain/repositories/IProductsRepositor
 export default class ListProductsService {
   constructor(private readonly productsRepositories: IProductsRepositories) {}
 
-  async execute(): Promise<IProduct[]> {
+  async execute(): Promise<IProduct[] | null> {
     const redisCache = new RedisCache();
 
     let products = await redisCache.recover<IProduct[]>(

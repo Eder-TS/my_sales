@@ -9,7 +9,7 @@ export interface IProductsRepositories {
   findByName(name: string): Promise<IProduct | null>;
   findById(id: number): Promise<IProduct | null>;
   findAllByIds(products: IFindProducts[]): Promise<IProduct[]>;
-  find(): Promise<IProduct[]>;
+  find(): Promise<IProduct[] | null>;
   create(data: ICreateProduct): IProduct;
   save(product: IProduct): Promise<IProduct>;
   delete(id: number): Promise<void>;
