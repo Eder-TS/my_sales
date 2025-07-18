@@ -1,25 +1,26 @@
 import AppError from '@shared/errors/AppError';
-import { User } from '../infra/database/entities/User';
-import { usersRepositories } from '../infra/database/repositories/UsersRepositories';
 import bcrypt from 'bcrypt';
 import { ICreateUser } from '../domain/models/ICreateUser';
+import { IUsersRepositories } from '../domain/repositories/IUsersRepositories';
+import { IUser } from '../domain/models/IUser';
 
 export default class CreateUserService {
-  async execute({ name, email, password }: ICreateUser): Promise<User> {
-    const userExists = await usersRepositories.findByEmail(email);
+  constructor(private readonly usersRepositories: IUsersRepositories) {}
+  async execute({ name, email, password }: ICreateUser): Promise<IUser> {
+    const userExists = await this.usersRepositories.findByEmail(email);
 
     if (userExists)
       throw new AppError('There is already one user with this email.', 409);
 
     const encryptedPassword = await bcrypt.hash(password, 10);
 
-    const user = usersRepositories.create({
+    const user = this.usersRepositories.create({
       name,
       email,
       password: encryptedPassword,
     });
 
-    await usersRepositories.save(user);
+    await this.usersRepositories.save(user);
 
     return user;
   }

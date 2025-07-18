@@ -1,13 +1,14 @@
 import AppError from '@shared/errors/AppError';
-import { usersRepositories } from '../infra/database/repositories/UsersRepositories';
 import { compare } from 'bcrypt';
 import { Secret, sign } from 'jsonwebtoken';
 import { ISessionUser } from '../domain/models/ISessionUser';
 import { ISessionResponse } from '../domain/models/ISessionResponse';
+import { IUsersRepositories } from '../domain/repositories/IUsersRepositories';
 
 export default class SessionUserService {
+  constructor(private readonly usersRepositories: IUsersRepositories) {}
   async execute({ email, password }: ISessionUser): Promise<ISessionResponse> {
-    const user = await usersRepositories.findByEmail(email);
+    const user = await this.usersRepositories.findByEmail(email);
     if (!user) throw new AppError('Invalid credentials.', 401);
 
     const passwordConfirmed = await compare(password, user.password);

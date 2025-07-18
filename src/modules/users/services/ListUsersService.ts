@@ -1,9 +1,10 @@
-import { User } from '../infra/database/entities/User';
-import { usersRepositories } from '../infra/database/repositories/UsersRepositories';
+import { IUser } from '../domain/models/IUser';
+import { IUsersRepositories } from '../domain/repositories/IUsersRepositories';
 
 export default class ListUsersService {
-  async execute(): Promise<User[]> {
-    const users = await usersRepositories.find();
+  constructor(private readonly usersRepositories: IUsersRepositories) {}
+  async execute(): Promise<IUser[]> {
+    const users = await this.usersRepositories.find();
 
     return users;
   }

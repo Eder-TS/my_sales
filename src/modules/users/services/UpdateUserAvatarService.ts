@@ -1,9 +1,9 @@
 import AppError from '@shared/errors/AppError';
-import { User } from '../infra/database/entities/User';
-import { usersRepositories } from '../infra/database/repositories/UsersRepositories';
 import path from 'path';
 import uploadConfig from '@config/upload';
 import fs from 'fs';
+import { IUsersRepositories } from '../domain/repositories/IUsersRepositories';
+import { IUser } from '../domain/models/IUser';
 
 interface IUpdateUserAvatar {
   id: number;
@@ -11,8 +11,9 @@ interface IUpdateUserAvatar {
 }
 
 export default class UpdateUserAvatarService {
-  async execute({ id, avatarFileName }: IUpdateUserAvatar): Promise<User> {
-    const user = await usersRepositories.findById(id);
+  constructor(private readonly usersRepositories: IUsersRepositories) {}
+  async execute({ id, avatarFileName }: IUpdateUserAvatar): Promise<IUser> {
+    const user = await this.usersRepositories.findById(id);
     if (!user) throw new AppError('User not found', 404);
 
     if (user.avatar) {
@@ -28,11 +29,12 @@ export default class UpdateUserAvatarService {
           // Deleta com unlink.
           await fs.promises.unlink(userAvatarFilePath);
         }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {}
     }
 
     user.avatar = avatarFileName;
-    await usersRepositories.save(user);
+    await this.usersRepositories.save(user);
     return user;
   }
 }
