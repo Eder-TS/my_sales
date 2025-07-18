@@ -24,7 +24,7 @@ export default class ProductsRepositories implements IProductsRepositories {
     return await this.ormRepository.findOneBy({ id });
   }
 
-  async findAllByIds(products: IFindProducts[]): Promise<IProduct[]> {
+  async findAllByIds(products: IFindProducts[]): Promise<IProduct[] | null> {
     const productsId = products.map(product => product.id);
 
     const existentProducts = await this.ormRepository.find({
@@ -49,7 +49,7 @@ export default class ProductsRepositories implements IProductsRepositories {
     return;
   }
 
-  async find(): Promise<IProduct[]> {
+  async find(): Promise<IProduct[] | null> {
     const products = await this.ormRepository.find();
 
     return products;
