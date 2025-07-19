@@ -7,6 +7,7 @@ import ErrorHandlerMiddleware from '@shared/middlewares/ErrorHandlerMiddleware';
 import { errors } from 'celebrate';
 import RateLimiter from '@shared/middlewares/RateLimiter';
 import { AppDataSource } from '../typeorm/data-source';
+import '@shared/container';
 
 AppDataSource.initialize()
   .then(async () => {

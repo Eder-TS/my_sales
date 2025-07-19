@@ -1,9 +1,14 @@
 import { IPagination } from '@shared/interfaces/pagination.interface';
 import { Customer } from '../infra/database/entities/Customer';
 import { ICustomerRepositories } from '../domain/repositories/ICustomerRepositories';
+import { inject, injectable } from 'tsyringe';
 
+@injectable()
 export default class ListCustomersService {
-  constructor(private readonly customerRepositories: ICustomerRepositories) {}
+  constructor(
+    @inject('CustomerRepositories')
+    private readonly customerRepositories: ICustomerRepositories,
+  ) {}
 
   // Recebe, opcionalmente, a página e limite de linhas por página para
   // fazer a paginação e não sobrecarregar o banco de dados.

@@ -10,7 +10,7 @@ import AuthMiddleware from '@shared/middlewares/AuthMiddleware';
 const customerRouter = Router();
 const customersControllers = new CustomersControllers();
 
-customerRouter.use(AuthMiddleware.execute);
+//customerRouter.use(AuthMiddleware.execute);
 
 customerRouter.get('/', customersControllers.list);
 customerRouter.get('/:id', idParamsValidate, customersControllers.show);

@@ -2,11 +2,16 @@ import AppError from '@shared/errors/AppError';
 import { Customer } from '../infra/database/entities/Customer';
 import { ICreateCustomer } from '../domain/models/ICreateCustomer';
 import { ICustomerRepositories } from '../domain/repositories/ICustomerRepositories';
+import { inject, injectable } from 'tsyringe';
 
+@injectable()
 export default class CreateCustomerService {
   // A interface aqui é usada como princípio do SOLID, fazendo a inversão da dependência.
   // Este serviço não sabe o quê acontece no repositório, apenas segue a interface do domínio.
-  constructor(private readonly customerRepositories: ICustomerRepositories) {}
+  constructor(
+    @inject('CustomerRepositories')
+    private readonly customerRepositories: ICustomerRepositories,
+  ) {}
 
   public async execute({ name, email }: ICreateCustomer): Promise<Customer> {
     const emailExists = await this.customerRepositories.findByEmail(email);
