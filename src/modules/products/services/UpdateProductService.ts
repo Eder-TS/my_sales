@@ -1,8 +1,8 @@
 import AppError from '@shared/errors/AppError';
 import { Product } from '../infra/database/entities/Product';
-import { productsRepositories } from '../infra/database/repositories/ProductsRepositories';
 import RedisCache from '@shared/cache/RedisCache';
 import { IProductsRepositories } from '../domain/repositories/IProductsRepositories';
+import { inject, injectable } from 'tsyringe';
 
 interface IUpdateProduct {
   id: string;
@@ -10,8 +10,13 @@ interface IUpdateProduct {
   price: number;
   quantity: number;
 }
+
+@injectable()
 export default class UpdateProductService {
-  constructor(private readonly productsRepositories: IProductsRepositories) {}
+  constructor(
+    @inject('ProductsRepositories')
+    private readonly productsRepositories: IProductsRepositories,
+  ) {}
 
   async execute({
     id,

@@ -4,11 +4,18 @@ import { ICreateOrder } from '../domain/models/ICreateOrder';
 import { ICustomerRepositories } from '@modules/customers/domain/repositories/ICustomerRepositories';
 import { IOrderRepositories } from '../domain/repositories/IOrderRepositories';
 import { IProductsRepositories } from '@modules/products/domain/repositories/IProductsRepositories';
+import { inject, injectable } from 'tsyringe';
 
+@injectable()
 export default class CreateOrderService {
   constructor(
+    @inject('CustomerRepositories')
     private readonly customerRepositories: ICustomerRepositories,
+
+    @inject('OrderRepositories')
     private readonly orderRepositories: IOrderRepositories,
+
+    @inject('ProductRepositories')
     private readonly productsRepositories: IProductsRepositories,
   ) {}
 

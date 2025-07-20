@@ -4,14 +4,19 @@ import uploadConfig from '@config/upload';
 import fs from 'fs';
 import { IUsersRepositories } from '../domain/repositories/IUsersRepositories';
 import { IUser } from '../domain/models/IUser';
+import { inject, injectable } from 'tsyringe';
 
 interface IUpdateUserAvatar {
   id: number;
   avatarFileName: string;
 }
 
+@injectable()
 export default class UpdateUserAvatarService {
-  constructor(private readonly usersRepositories: IUsersRepositories) {}
+  constructor(
+    @inject('UsersRepositories')
+    private readonly usersRepositories: IUsersRepositories,
+  ) {}
   async execute({ id, avatarFileName }: IUpdateUserAvatar): Promise<IUser> {
     const user = await this.usersRepositories.findById(id);
     if (!user) throw new AppError('User not found', 404);

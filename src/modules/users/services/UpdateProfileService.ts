@@ -2,6 +2,7 @@ import AppError from '@shared/errors/AppError';
 import { compare, hash } from 'bcrypt';
 import { IUsersRepositories } from '../domain/repositories/IUsersRepositories';
 import { IUser } from '../domain/models/IUser';
+import { inject, injectable } from 'tsyringe';
 
 interface IUpdateProfile {
   userId: number;
@@ -11,8 +12,12 @@ interface IUpdateProfile {
   old_password: string;
 }
 
+@injectable()
 export default class UpdateProfileService {
-  constructor(private readonly usersRepositories: IUsersRepositories) {}
+  constructor(
+    @inject('UsersRepositories')
+    private readonly usersRepositories: IUsersRepositories,
+  ) {}
   async execute({
     userId,
     name,

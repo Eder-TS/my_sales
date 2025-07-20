@@ -1,9 +1,14 @@
 import RedisCache from '@shared/cache/RedisCache';
 import { IProduct } from '../domain/models/IProduct';
 import { IProductsRepositories } from '../domain/repositories/IProductsRepositories';
+import { inject, injectable } from 'tsyringe';
 
+@injectable()
 export default class ListProductsService {
-  constructor(private readonly productsRepositories: IProductsRepositories) {}
+  constructor(
+    @inject('ProductsRepositories')
+    private readonly productsRepositories: IProductsRepositories,
+  ) {}
 
   async execute(): Promise<IProduct[] | null> {
     const redisCache = new RedisCache();

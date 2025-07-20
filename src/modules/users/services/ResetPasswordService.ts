@@ -3,15 +3,19 @@ import { isAfter, addHours } from 'date-fns';
 import { hash } from 'bcrypt';
 import { IUsersRepositories } from '../domain/repositories/IUsersRepositories';
 import { IUserTokensRepositories } from '../domain/repositories/IUserTokensRepositories';
+import { inject, injectable } from 'tsyringe';
 
 interface IResetPassword {
   token: string;
   password: string;
 }
 
+@injectable()
 export default class ResetPasswordService {
   constructor(
+    @inject('UsersRepositories')
     private readonly usersRepositories: IUsersRepositories,
+    @inject('UserTokensRepositories')
     private readonly userTokensRepositories: IUserTokensRepositories,
   ) {}
   async execute({ token, password }: IResetPassword): Promise<void> {

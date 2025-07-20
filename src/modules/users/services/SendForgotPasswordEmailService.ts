@@ -2,14 +2,18 @@ import AppError from '@shared/errors/AppError';
 import { sendEmail } from '@config/email';
 import { IUsersRepositories } from '../domain/repositories/IUsersRepositories';
 import { IUserTokensRepositories } from '../domain/repositories/IUserTokensRepositories';
+import { inject, injectable } from 'tsyringe';
 
 interface IForgotPassword {
   email: string;
 }
 
+@injectable()
 export default class SendForgotPasswordEmailService {
   constructor(
+    @inject('UsersRepositories')
     private readonly usersRepositories: IUsersRepositories,
+    @inject('UserTokensRepositories')
     private readonly userTokensRepositories: IUserTokensRepositories,
   ) {}
   async execute({ email }: IForgotPassword): Promise<void> {

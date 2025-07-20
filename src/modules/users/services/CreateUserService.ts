@@ -3,9 +3,14 @@ import bcrypt from 'bcrypt';
 import { ICreateUser } from '../domain/models/ICreateUser';
 import { IUsersRepositories } from '../domain/repositories/IUsersRepositories';
 import { IUser } from '../domain/models/IUser';
+import { inject, injectable } from 'tsyringe';
 
+@injectable()
 export default class CreateUserService {
-  constructor(private readonly usersRepositories: IUsersRepositories) {}
+  constructor(
+    @inject('UsersRepositories')
+    private readonly usersRepositories: IUsersRepositories,
+  ) {}
   async execute({ name, email, password }: ICreateUser): Promise<IUser> {
     const userExists = await this.usersRepositories.findByEmail(email);
 

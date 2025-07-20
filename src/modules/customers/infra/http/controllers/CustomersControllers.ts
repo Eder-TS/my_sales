@@ -6,6 +6,9 @@ import UpdateCustomerService from '@modules/customers/services/UpdateCustomerSer
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
+// Injeção de dependências com tsyringe.
+// Teria que instanciar o repositório aqui, em vez disso injetamos usando um container.
+// O mesmo será aplicado a todos os outros módulos.
 export default class CustomersControllers {
   async create(request: Request, response: Response): Promise<Response> {
     const createCustomer = container.resolve(CreateCustomerService);
