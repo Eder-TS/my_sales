@@ -34,20 +34,26 @@ export default class UsersRepositories implements IUsersRepositories {
     if (!id || typeof id !== 'number')
       throw new AppError('Invalid search value to database.', 400);
 
-    return await this.ormRepository.findOneBy({ id });
+    const user = await this.ormRepository.findOneBy({ id });
+
+    return user;
   }
 
   async findByEmail(email: string): Promise<IUser | null> {
     if (!email || typeof email !== 'string')
       throw new AppError('Invalid search value to database.', 400);
 
-    return await this.ormRepository.findOneBy({ email });
+    const user = await this.ormRepository.findOneBy({ email });
+
+    return user;
   }
 
-  async findByName(name: string): Promise<User | null> {
+  async findByName(name: string): Promise<IUser | null> {
     if (!name || typeof name !== 'string')
       throw new AppError('Invalid search value to database.', 400);
 
-    return await this.ormRepository.findOneBy({ name });
+    const user = await this.ormRepository.findOneBy({ name });
+
+    return user;
   }
 }
