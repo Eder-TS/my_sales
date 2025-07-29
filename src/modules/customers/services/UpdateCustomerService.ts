@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError';
-import { Customer } from '../infra/database/entities/Customer';
 import { ICustomerRepositories } from '../domain/repositories/ICustomerRepositories';
 import { inject, injectable } from 'tsyringe';
+import { ICustomer } from '../domain/models/ICustomer';
 
 interface IUpdateCustomer {
   id: string;
@@ -15,7 +15,7 @@ export default class UpdateCustomerService {
     @inject('CustomerRepositories')
     private readonly customerRepositories: ICustomerRepositories,
   ) {}
-  async execute({ id, name, email }: IUpdateCustomer): Promise<Customer> {
+  async execute({ id, name, email }: IUpdateCustomer): Promise<ICustomer> {
     const idToUpdate = Number(id);
     const customer = await this.customerRepositories.findById(idToUpdate);
 

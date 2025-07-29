@@ -4,4 +4,4 @@ build
 .env
 package-lock.json
 uploads/*
-
+coverage
