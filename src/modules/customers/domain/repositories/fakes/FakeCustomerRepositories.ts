@@ -4,6 +4,9 @@ import { ICustomer } from '../../models/ICustomer';
 import { ICustomerRepositories, Pagination } from '../ICustomerRepositories';
 
 export default class FakeCustomerRepositories implements ICustomerRepositories {
+  findAndCount(pagination: Pagination): Promise<[ICustomer[], number]> {
+    throw new Error('Method not implemented.');
+  }
   private customers: Customer[] = [];
 
   async findByEmail(email: string): Promise<ICustomer | null> {
@@ -51,8 +54,6 @@ export default class FakeCustomerRepositories implements ICustomerRepositories {
     );
     return;
   }
-
-  findAndCount(pagination: Pagination): Promise<[ICustomer[], number]> {}
 
   async findByName(name: string): Promise<ICustomer | null> {
     const customer = this.customers.find(customer => customer.name === name);
