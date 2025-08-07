@@ -1,9 +1,12 @@
-import { Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import SendForgotPasswordEmailService from '../../../services/SendForgotPasswordEmailService';
 import { container } from 'tsyringe';
 
 export default class SendForgotPasswordEmailController {
-  async create(request: Request, response: Response): Promise<Response> {
+  public create: RequestHandler = async (
+    request: Request,
+    response: Response,
+  ): Promise<void> => {
     const { email } = request.body;
 
     const sendForgotPasswordEmailService = container.resolve(
@@ -14,6 +17,6 @@ export default class SendForgotPasswordEmailController {
 
     // sendStatus() é um método mais completo e não necessita do método
     // json(). O uso de json() causa uma tentativa de resposta duplicada.
-    return response.sendStatus(204);
-  }
+    response.sendStatus(204);
+  };
 }

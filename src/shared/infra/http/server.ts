@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import 'express-async-errors';
-import express from 'express';
+import express, { ErrorRequestHandler } from 'express';
 import cors from 'cors';
 import routes from './routes';
 import ErrorHandlerMiddleware from '@shared/middlewares/ErrorHandlerMiddleware';
@@ -9,41 +9,42 @@ import RateLimiter from '@shared/middlewares/RateLimiter';
 import { AppDataSource } from '../typeorm/data-source';
 import '@shared/container';
 
-AppDataSource.initialize()
-  .then(async () => {
-    const app = express();
-    app.use(cors());
-    app.use(express.json());
+// Declaração do errorHandler aqui para o Typescript não reclamar em app.use().
+const syntaxErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  if (err instanceof SyntaxError && 'body' in err) {
+    res.status(400).json({ error: 'Malformed JSON in request body.' });
+    return;
+  }
+  next(err);
+};
 
-    // Adicionando o Rate Limiter para evitar ataque hacker de força bruta.
-    app.use(RateLimiter);
+const startServer = async () => {
+  await AppDataSource.initialize();
 
-    app.use(routes);
+  const app = express();
+  app.use(cors());
+  app.use(express.json());
 
-    // Usando o middleware do celebrate para que as validações dos esquemas sejam feitas.
-    app.use(errors());
+  // Adicionando o Rate Limiter para evitar ataque hacker de força bruta.
+  app.use(RateLimiter);
 
-    app.use(
-      (
-        err: any,
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction,
-      ) => {
-        if (err instanceof SyntaxError && 'body' in err) {
-          return res
-            .status(400)
-            .json({ error: 'Malformed JSON in request body.' });
-        }
-        next(err);
-      },
-    );
+  app.use(routes);
 
-    // Depois de lançar as rotas, chamo o middleware para pegar os erros.
-    app.use(ErrorHandlerMiddleware.HandleError);
+  // Usando o middleware do celebrate para que as validações dos esquemas sejam feitas.
+  app.use(errors());
 
-    console.log('Connected to database!');
+  app.use(syntaxErrorHandler);
 
+  // Depois de lançar as rotas, chamo o middleware para pegar os erros.
+  app.use(ErrorHandlerMiddleware.HandleError);
+
+  console.log('Connected to database!');
+
+  return app;
+};
+
+export default startServer()
+  .then(app => {
     app.listen(3333, () => {
       console.log('Server runing on port 3333!');
     });

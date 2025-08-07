@@ -1,11 +1,14 @@
-import { Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import ShowProfileService from '../../../services/ShowProfileService';
 import UpdateProfileService from '../../../services/UpdateProfileService';
 import { container } from 'tsyringe';
 import { instanceToInstance } from 'class-transformer';
 
 export default class ProfileControllers {
-  public async show(request: Request, response: Response): Promise<Response> {
+  public show: RequestHandler = async (
+    request: Request,
+    response: Response,
+  ): Promise<void> => {
     const showProfile = container.resolve(ShowProfileService);
 
     // Feita a extenção de Request do Express para adiconar a propriedade
@@ -14,10 +17,13 @@ export default class ProfileControllers {
 
     const user = await showProfile.execute({ userId });
 
-    return response.json(instanceToInstance(user));
-  }
+    response.json(instanceToInstance(user));
+  };
 
-  public async update(request: Request, response: Response): Promise<Response> {
+  public update: RequestHandler = async (
+    request: Request,
+    response: Response,
+  ): Promise<void> => {
     const updateProfile = container.resolve(UpdateProfileService);
     const userId = request.user.id;
     const { name, email, password, old_password } = request.body;
@@ -30,6 +36,6 @@ export default class ProfileControllers {
       old_password,
     });
 
-    return response.json(instanceToInstance(user));
-  }
+    response.json(instanceToInstance(user));
+  };
 }
