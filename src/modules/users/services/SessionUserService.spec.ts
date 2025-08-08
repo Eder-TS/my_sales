@@ -4,7 +4,6 @@ import SessionUserService from './SessionUserService';
 import 'reflect-metadata';
 import { loginMock, userMock } from '../domain/factories/userFactory';
 import AppError from '@shared/errors/AppError';
-import { invalid } from 'joi';
 
 jest.mock('bcrypt', () => ({
   compare: jest.fn(),

@@ -45,7 +45,7 @@ const startServer = async () => {
 
 export default startServer()
   .then(app => {
-    app.listen(3333, () => {
+    return app.listen(3333, () => {
       console.log('Server runing on port 3333!');
     });
   })
