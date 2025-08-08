@@ -10,7 +10,7 @@ export class AddCustomerIdToOrders1750719420106 implements MigrationInterface {
     await queryRunner.addColumn(
       'orders',
       new TableColumn({
-        name: 'customerId',
+        name: 'customer_id',
         type: 'integer',
         isNullable: true,
       }),
@@ -19,8 +19,8 @@ export class AddCustomerIdToOrders1750719420106 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'orders',
       new TableForeignKey({
-        name: 'OrdersCustomer',
-        columnNames: ['customerId'],
+        name: 'orders_customer',
+        columnNames: ['customer_id'],
         referencedTableName: 'customers',
         referencedColumnNames: ['id'],
         onDelete: 'SET NULL',
@@ -29,7 +29,7 @@ export class AddCustomerIdToOrders1750719420106 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('orders', 'OrdersCustomer');
-    await queryRunner.dropColumn('orders', 'customerId');
+    await queryRunner.dropForeignKey('orders', 'orders_customer');
+    await queryRunner.dropColumn('orders', 'customer_id');
   }
 }

@@ -16,7 +16,7 @@ export class Order implements IOrder {
   id: number;
 
   @ManyToOne(() => Customer)
-  @JoinColumn({ name: 'customerId' })
+  @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
   @OneToMany(() => OrdersProducts, orderProduct => orderProduct.order, {
@@ -24,9 +24,9 @@ export class Order implements IOrder {
   })
   orderProduct: OrdersProducts[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'update_at' })
   updatedAt: Date;
 }

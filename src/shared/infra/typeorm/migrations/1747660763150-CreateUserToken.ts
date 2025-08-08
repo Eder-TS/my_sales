@@ -6,7 +6,7 @@ export class CreateUserToken1747660763150 implements MigrationInterface {
 
     await queryRunner.createTable(
       new Table({
-        name: 'userTokens',
+        name: 'user_tokens',
         columns: [
           {
             name: 'id',
@@ -22,26 +22,26 @@ export class CreateUserToken1747660763150 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'userId',
+            name: 'user_id',
             type: 'integer',
           },
           {
-            name: 'createdAt',
+            name: 'created_at',
             type: 'timestamp',
             default: 'now()',
           },
           {
-            name: 'updatedAt',
+            name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
           },
         ],
         foreignKeys: [
           {
-            name: 'TokenUser',
+            name: 'token_user',
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
-            columnNames: ['userId'],
+            columnNames: ['user_id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
@@ -51,6 +51,6 @@ export class CreateUserToken1747660763150 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('userTokens');
+    await queryRunner.dropTable('user_tokens');
   }
 }

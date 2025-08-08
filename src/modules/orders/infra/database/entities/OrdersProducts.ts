@@ -10,23 +10,23 @@ import { Order } from './Order';
 import { Product } from '@modules/products/infra/database/entities/Product';
 import { IOrdersProducts } from '@modules/orders/domain/models/IOrdersProducts';
 
-@Entity('ordersProducts')
+@Entity('orders_products')
 export class OrdersProducts implements IOrdersProducts {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => Order, order => order.orderProduct)
-  @JoinColumn({ name: 'orderId' })
+  @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @Column()
+  @Column({ name: 'order_id' })
   orderId: number;
 
   @ManyToOne(() => Product, product => product.orderProduct)
-  @JoinColumn({ name: 'productId' })
+  @JoinColumn({ name: 'product_id' })
   product: Product;
 
-  @Column()
+  @Column({ name: 'product_id' })
   productId: number;
 
   @Column('decimal')
@@ -35,9 +35,9 @@ export class OrdersProducts implements IOrdersProducts {
   @Column('int')
   quantity: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

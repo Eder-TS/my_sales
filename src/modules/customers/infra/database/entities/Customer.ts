@@ -17,9 +17,9 @@ export class Customer implements ICustomer {
   @Column()
   email: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

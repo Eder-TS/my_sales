@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity('userTokens')
+@Entity('user_tokens')
 export default class UserTokens implements IUserTokens {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,12 +16,12 @@ export default class UserTokens implements IUserTokens {
   @Generated('uuid')
   token: string;
 
-  @Column()
+  @Column({ name: 'user_id' })
   userId: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

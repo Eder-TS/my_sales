@@ -4,7 +4,7 @@ export class CreateOrdersProducts1750728819187 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'ordersProducts',
+        name: 'orders_products',
         columns: [
           {
             name: 'id',
@@ -24,12 +24,12 @@ export class CreateOrdersProducts1750728819187 implements MigrationInterface {
             type: 'integer',
           },
           {
-            name: 'createdAt',
+            name: 'created_at',
             type: 'timestamp',
             default: 'now()',
           },
           {
-            name: 'updatedAt',
+            name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
           },
@@ -39,6 +39,6 @@ export class CreateOrdersProducts1750728819187 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('ordersProducts');
+    await queryRunner.dropTable('orders_products');
   }
 }
