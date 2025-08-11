@@ -24,6 +24,8 @@ describe('Create User', () => {
     }
 
     await AppDataSource.destroy();
+
+    (await appPromise).close();
   });
 
   it('should be able to create a new user', async () => {
