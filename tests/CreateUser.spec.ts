@@ -1,31 +1,40 @@
-import { AppDataSource } from '../src/shared/infra/typeorm/data-source';
-import { App } from 'supertest/types';
-import appPromise from '../src/shared/infra/http/server';
 import request from 'supertest';
+import app from '../src/shared/infra/http/app';
+import { AppDataSource } from '../src/shared/infra/typeorm/data-source';
+import { redisClient } from '../src/shared/middlewares/client/clientRedis';
 
 describe('Create User', () => {
-  let app: App;
-
-  // Para os testes de integração modifico a inicialização do server para que possa ser
-  // instanciado a partir de outro ponto, neste caso aqui...
   beforeAll(async () => {
     await AppDataSource.initialize();
-    app = (await appPromise) as App;
   });
 
-  // ...então no final dos testes faço e exclusão do banco de dados.
   afterAll(async () => {
-    const entities = AppDataSource.entityMetadatas;
-
-    for (const entity of entities) {
-      const repository = AppDataSource.getRepository(entity.name);
-
-      await repository.query(`DELETE FROM ${entity.tableName}`);
-    }
+    await AppDataSource.query('DELETE FROM users');
 
     await AppDataSource.destroy();
 
-    (await appPromise).close();
+    await redisClient.quit();
+
+    // Deixo aqui ferramenta para depurar handlers abertos na finalização dos testes.
+    // const handles = (process as any)._getActiveHandles() as unknown[];
+
+    // console.log('>>> HANDLES ABERTOS:');
+    // for (const h of handles) {
+    //   if (h && typeof h === 'object') {
+    //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //     console.log((h as any).constructor?.name, h);
+    //   }
+    // }
+
+    // // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // handles.forEach((h: any) => {
+    //   if (h.constructor?.name === 'Socket') {
+    //     console.log('>>> SOCKET ABERTO:', {
+    //       local: h.localAddress + ':' + h.localPort,
+    //       remote: h.remoteAddress + ':' + h.remotePort,
+    //     });
+    //   }
+    // });
   });
 
   it('should be able to create a new user', async () => {

@@ -15,7 +15,7 @@ export default class CreateOrderService {
     @inject('OrderRepositories')
     private readonly orderRepositories: IOrderRepositories,
 
-    @inject('ProductRepositories')
+    @inject('ProductsRepositories')
     private readonly productsRepositories: IProductsRepositories,
   ) {}
 

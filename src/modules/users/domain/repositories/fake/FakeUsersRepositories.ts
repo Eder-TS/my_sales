@@ -2,7 +2,6 @@ import { User } from '@modules/users/infra/database/entities/User';
 import { ICreateUser } from '../../models/ICreateUser';
 import { IUser } from '../../models/IUser';
 import { IUsersRepositories } from '../IUsersRepositories';
-import { v4 as uuidv4 } from 'uuid';
 
 export default class FakeUsersRepositories implements IUsersRepositories {
   private users: User[] = [];
