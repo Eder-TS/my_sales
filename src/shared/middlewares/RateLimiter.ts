@@ -1,14 +1,10 @@
 import AppError from '@shared/errors/AppError';
 import { Request, Response, NextFunction } from 'express';
 import { RateLimiterRedis } from 'rate-limiter-flexible';
-import { createClient } from 'redis';
+import { redisClient } from './client/clientRedis';
 
-// Criando um cliente específico para o Rate Limiter.
-const redisClient = createClient({
-  url: `redis://${process.env.HOST_REDIS}:${process.env.REDIS_PORT}`,
-  password: process.env.REDIS_PASS || undefined,
-});
-
+// Declaração do cliente Redis foi para outro arquivo para
+// poder fechar as conexões nos testes.
 redisClient.connect().catch(console.error);
 
 // O Rate Limiter irá limitar as chamadas (5 a cada 5 segundos neste caso)

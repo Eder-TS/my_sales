@@ -11,8 +11,8 @@ const baseDataSourceOptions: DataSourceOptions = {
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  entities: ['./src/modules/**/infra/database/entities/*.{ts, js}'],
-  migrations: ['./src/shared/infra/typeorm/migrations/*.{ts, js}'],
+  entities: ['./src/modules/**/infra/database/entities/*.{ts,js}'],
+  migrations: ['./src/shared/infra/typeorm/migrations/*.{ts,js}'],
 };
 
 const appTestDataSourceOptions: DataSourceOptions = {
